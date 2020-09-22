@@ -79,7 +79,7 @@ cpu_utlization{instance="10.20.0.1:9000",job="my_custom_metrics",provider="hetzn
 
 You may also view the above metric in the console.
 
-A more realistic example is one where you can embed the code that pushes your custom metrics. Below is an example of using Python to achieve this:
+A more realistic example is one where you can embed the pushing of the metrics within code. Below is an example of using Python to achieve this:
 
 ```
 import requests
@@ -94,9 +94,9 @@ response = requests.post('http://localhost:9091/metrics/job/{j}/instance/{i}/tea
 print(response.status_code)
 ```
 
-## Scrapting Pushgateway Metrics from Prometheus
+## Scraping Pushgateway Metrics from Prometheus
 
-Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs`` section to the values file of the prom-operator helm chart as below:
+Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs``` section to the values file of the prom-operator helm chart as below:
 
 ```
     prometheusSpec:
