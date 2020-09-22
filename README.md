@@ -19,6 +19,7 @@ The Pushgateway therefore needs to be installed independently of the monitoring 
 This module uses terraform's ```helm_release``` resource to deploy the ```stable/prometheus-pushgateway```. More information on this chart can be found here:
 https://github.com/helm/charts/tree/master/stable/prometheus-pushgateway
 
+
 ## Usage
 
 ```hcl
@@ -77,6 +78,23 @@ cpu_utlization{instance="10.20.0.1:9000",job="my_custom_metrics",provider="hetzn
 ```
 
 You may also view the above metric in the console.
+
+A more realistic example is one where you can embed the code that pushes your custom metrics. Below is an example of using Python to achieve this:
+
+```
+import requests
+
+job_name='my_custom_metrics'
+instance_name='10.20.0.1:9000'
+provider='hetzner'
+payload_key='cpu_utilization'
+payload_value='21.90'
+
+response = requests.post('http://localhost:9091/metrics/job/{j}/instance/{i}/team/{t}'.format(j=job_name, i=instance_name, t=team_name), data='{k} {v}\n'.format(k=payload_key, v=payload_value))
+print(response.status_code)
+```
+
+## Scrapting Pushgateway Metrics from Prometheus
 
 Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs`` section to the values file of the prom-operator helm chart as below:
 
