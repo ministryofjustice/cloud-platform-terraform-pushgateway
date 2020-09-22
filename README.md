@@ -2,7 +2,7 @@
 
 Terraform module that deploy cloud-platform pushgateway solution.
 
-## Usage
+## Overview
 
 Pushgateway is an intermediary service which allows you to define and push 'custom' metrics from jobs. Usually these would be metrics from instances or external components
 that reside outside of the kubernetes cluster and so by default Prometheus would not be able to scrape the metrics. 
@@ -19,12 +19,24 @@ The Pushgateway therefore needs to be installed independently of the monitoring 
 This module uses terraform's ```helm_release``` resource to deploy the ```stable/prometheus-pushgateway```. More information on this chart can be found here:
 https://github.com/helm/charts/tree/master/stable/prometheus-pushgateway
 
+## Usage
+
 ```hcl
 module "pushgateway" {
   source = "github.com/ministryofjustice/cloud-platform-terraform-pushgateway?ref=1.0.0"
   enable_service_monitor        = true
 }
 ```
+
+To deploy Pushwaygateway, execute the module within your namespace. See ```example/pushgateway``` as a template example
+
+Once deployed you should see the associated resources for Pushgateway 
+
+```kubdectl get all -n <NAMESPACE>```
+
+
+``` kubectl port-forward service/pushgateway-prometheus-pushgateway 9091 -n monitoring ```
+
 
 ## Inputs
 
