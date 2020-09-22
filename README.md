@@ -14,7 +14,7 @@ Metrics are 'pushed' to Pushgateway as opposed to the 'pull' model of Prometheus
 Once a metrics are 'pushed' to the Pushgateway service, Prometheus can scrape the metrics by adding a Pushgateway 'target' to its configuration
 
 The ```prometheus-operator``` used to install the existing monitoring stack (Prometheus, Grafana etc) does not currently have any CRDs of ```kind: PushGateway```.
-The Pushgateway therefore needs to be installed independently of the monitoring stack.
+The Pushgateway therefore needs to be installed independently of the prometheus-operator helm chart and instead installed through its own helm chart.
 
 This module uses terraform's ```helm_release``` resource to deploy the ```stable/prometheus-pushgateway```. More information on this chart can be found here:
 https://github.com/helm/charts/tree/master/stable/prometheus-pushgateway
