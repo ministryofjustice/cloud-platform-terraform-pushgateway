@@ -11,9 +11,9 @@ Pushgateway therefore acts as the intermediary between the metric source and Pro
 
 Metrics are 'pushed' to Pushgateway as opposed to the 'pull' model of Prometheus
 
-Once a metrics are 'pushed' to the Pushgateway service, Prometheus can scrape the metrics by adding a Pushgateway 'target' to its configuration
+Once metrics are 'pushed' to the Pushgateway service, then Prometheus can scrape the metrics by adding a Pushgateway 'target' to its configuration
 
-The ```prometheus-operator``` used to install the existing monitoring stack (Prometheus, Grafana etc) does not currently have any CRDs of ```kind: PushGateway```.
+The prometheus-operator used to install the existing monitoring stack (Prometheus, Grafana etc) does not currently have any CRDs of ```kind: PushGateway```.
 The Pushgateway therefore needs to be installed independently of the prometheus-operator helm chart and instead installed through its own helm chart.
 
 This module uses terraform's ```helm_release``` resource to deploy the ```stable/prometheus-pushgateway```. More information on this chart can be found here:
@@ -96,7 +96,7 @@ print(response.status_code)
 
 ## Scraping Pushgateway Metrics from Prometheus
 
-Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs``` section to the values file of the prom-operator helm chart as below:
+Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs``` section to the values file of the prometheus-operator helm chart as below:
 
 ```
     prometheusSpec:
