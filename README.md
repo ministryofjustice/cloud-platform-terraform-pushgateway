@@ -35,19 +35,63 @@ Once deployed you should see the associated resources for Pushgateway
 
 ```kubdectl get all -n <NAMESPACE>```
 
+Output should be as follows:
+
+```
+NAME                                                      READY   STATUS    RESTARTS   AGE
+pod/pushgateway-prometheus-pushgateway-5767794788-nvxvg   1/1     Running   0          34s
+
+NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/pushgateway-prometheus-pushgateway   ClusterIP   10.245.57.207   <none>        9091/TCP   34s
+
+NAME                                                 READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/pushgateway-prometheus-pushgateway   1/1     1            1           34s
+
+NAME                                                            DESIRED   CURRENT   READY   AGE
+replicaset.apps/pushgateway-prometheus-pushgateway-5767794788   1         1         1       34s 
+```
+
+Once all resources are running as above you can then view the console of Pushgateway by port forwarding the Pushgateway service.
 
 ``` kubectl port-forward service/pushgateway-prometheus-pushgateway 9091 -n monitoring ```
 
+Browse to ```http://localhost:9091```
+
+## Pushing Custom Metrics
+
+Below are couple of examples of how you can push custom metrics to Pushgateway. 
+
+First ensure you have port-forwarded the Pushgateway service as above 
+
+Using curl you can push a hard-coded metric as follows:
+
+```echo "cpu_utilization 20.25" | curl --data-binary @- http://localhost:9091/metrics/job/my_custom_metrics/instance/10.20.0.1:9000/provider/hetzner```
+
+Have a look at pushgateway’s metrics endpoint:
+
+```
+$ curl -L http://localhost:9091/metrics/ | grep cpu_utilization
+
+# TYPE cpu_utilization untyped
+cpu_utlization{instance="10.20.0.1:9000",job="my_custom_metrics",provider="hetzner"} 20.25
+```
+
+You may also view the above metric in the console.
+
+Lastly if you need to have Prometheus scrape your custom metrics then you will need to ensure that a target pointing to your pushgateway is added to Prometheus' configuration. This can be done by adding a new ```job_name``` to the ```additionalScrapeConfigs`` section to the values file of the prom-operator helm chart as below:
+
+```
+    prometheusSpec:
+      additionalScrapeConfigs:
+      - job_name: 'pushgateway'
+        honor_labels: true
+        static_configs:
+        - targets: ['pushgateway-prometheus-pushgateway:9091']
+```
 
 ## Inputs
 
-| Name                         | Description         | Type | Default | Required |
-|------------------------------|---------------------|:----:|:-------:|:--------:|
-
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-
-
+| Name                         | Description               | Type    | Default | Required |
+|------------------------------|---------------------      |:----:   |:-------:|:--------:|
+|   namespace                     namespace of Pushgateway | String  |   ""    |     Yes  |
+|   enable_service_monitor     |                           | Boolean |   false |     No   |
