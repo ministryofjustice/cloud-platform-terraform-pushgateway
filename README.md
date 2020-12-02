@@ -1,6 +1,8 @@
-# cloud-platform-terraform-monitoring
+# cloud-platform-terraform-pushgateway
 
-Terraform module that deploy cloud-platform pushgateway solution.
+[![Releases](https://img.shields.io/github/release/ministryofjustice/cloud-platform-terraform-pushgateway/all.svg?style=flat-square)](https://github.com/ministryofjustice/cloud-platform-terraform-pushgateway/releases)
+
+Terraform module that deploy cloud-platform prometheus pushgateway.
 
 ## Overview
 
@@ -43,7 +45,8 @@ See [this example](example/pushgateway.tf)
   replicaset.apps/<NAMESPACE>-pushgateway-prometheus-pushgateway-5767794788   1         1         1       34s 
   ```
 
-  You can access your Pushgateway from the service http://<NAMESPACE>-pushgateway-prometheus-pushgateway:9091/metrics/job/<NAMESPACE>-pushgateway-prometheus-pushgateway/ 
+  You can access your pushgateway from the service 
+  ```http://<NAMESPACE>-pushgateway-prometheus-pushgateway:9091/metrics/job/<NAMESPACE>-pushgateway-prometheus-pushgateway/``` 
 
   ## Pushing Custom Metrics
 
@@ -76,4 +79,3 @@ See [this example](example/pushgateway.tf)
   ## Scraping Pushgateway Metrics from Prometheus
 
   By default, this module create a serviceMonitor resource which specifies how your pushgateway metrics can be retrieved from your pushgateway service. This will allow the prometheus-operator to monitor and pull metrics automatically from this service.
-
