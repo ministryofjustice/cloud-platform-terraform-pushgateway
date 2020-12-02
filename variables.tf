@@ -3,6 +3,6 @@ variable "namespace" {
 }
 
 variable "enable_service_monitor" {
-  default     = false
+  default     = true
   type        = bool
 }
