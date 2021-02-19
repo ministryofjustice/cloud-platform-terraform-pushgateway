@@ -1,11 +1,6 @@
-data "helm_repository" "pushgateway" {
-  name = "prometheus-community"
-  url  = "https://prometheus-community.github.io/helm-charts"
-}
-
-resource "helm_release" "pushgateway" {
+  resource "helm_release" "pushgateway" {
   name       = "${var.namespace}-pushgateway"
-  repository = data.helm_repository.pushgateway.metadata[0].name
+  repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "prometheus-pushgateway"
   namespace  = var.namespace
   version    = "1.5.0"
