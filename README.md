@@ -33,20 +33,20 @@ See [this example](example/pushgateway.tf)
 
   ```
   NAME                                                                  READY   STATUS    RESTARTS   AGE
-  pod/<NAMESPACE>-pushgateway-prometheus-pushgateway-7b96f94bgd5l4   1/1     Running   0          3h42m
+  pod/<NAMESPACE>-pushgateway-7b96f94bgd5l4   1/1     Running   0          3h42m
 
   NAME                                         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
-  service/<NAMESPACE>-pushgateway-prometheus-pushgateway   ClusterIP   10.245.57.207   <none>        9091/TCP   34s
+  service/<NAMESPACE>-pushgateway-prometheus   ClusterIP   10.245.57.207   <none>        9091/TCP   34s
 
   NAME                                                 READY   UP-TO-DATE   AVAILABLE   AGE
-  deployment.apps/<NAMESPACE>-pushgateway-prometheus-pushgateway   1/1     1            1           34s
+  deployment.apps/<NAMESPACE>-pushgateway-prometheus   1/1     1            1           34s
 
   NAME                                                            DESIRED   CURRENT   READY   AGE
-  replicaset.apps/<NAMESPACE>-pushgateway-prometheus-pushgateway-5767794788   1         1         1       34s 
+  replicaset.apps/<NAMESPACE>-pushgateway-prometheus-5767794788   1         1         1       34s 
   ```
 
   You can access your pushgateway from the service 
-  ```http://<NAMESPACE>-pushgateway-prometheus-pushgateway:9091/metrics/job/<NAMESPACE>-pushgateway-prometheus-pushgateway/``` 
+  ```http://<NAMESPACE>-pushgateway-prometheus:9091/metrics/job/<NAMESPACE>-pushgateway-prometheus-pushgateway/``` 
 
   ## Pushing Custom Metrics
 
@@ -56,9 +56,17 @@ See [this example](example/pushgateway.tf)
 
   ```echo "cpu_utilization 20.25" | curl --data-binary @- http://localhost:9091/metrics/job/my_batch_job_custom_metrics```
 
+  If you are getting `invalid metric name error`, your cmd editor might not be compatible. In that case try
+  
+  ```
+  cat <<EOF | curl --data-binary @- http://localhost:9091/metrics/job/my_batch_job_custom_metrics
+  cpu_utilization 20.25
+  EOF
+  ```
+
   You can view the console of Pushgateway by port forwarding the Pushgateway service.
 
-  ``` kubectl port-forward service/<namespace>-pushgateway-prometheus-pushgateway 9091 -n <namespace> ```
+  ``` kubectl port-forward service/<namespace>-pushgateway-prometheus 9091 -n <namespace> ```
 
   Browse to ```http://localhost:9091```
 
