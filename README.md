@@ -17,6 +17,39 @@ https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-
 See [this example](example/pushgateway.tf)
 
 <!-- BEGIN_TF_DOCS -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.5 |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm) | >= 2.6.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_helm"></a> [helm](#provider\_helm) | >= 2.6.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [helm_release.pushgateway](https://registry.terraform.io/providers/hashicorp/helm/latest/docs/resources/release) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_enable_service_monitor"></a> [enable\_service\_monitor](#input\_enable\_service\_monitor) | Whether to enable service monitor | `bool` | `true` | no |
+| <a name="input_namespace"></a> [namespace](#input\_namespace) | Namespace name | `string` | `""` | no |
+
+## Outputs
+
+No outputs.
 <!-- END_TF_DOCS -->
 
 ## Pushing Custom Metrics
