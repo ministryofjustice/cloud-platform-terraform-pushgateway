@@ -1,5 +1,5 @@
 provider "kubernetes" {
-  version = "~> 1.11"
+  version = "~> 2.18.0"
 }
 
 provider "helm" {
