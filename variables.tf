@@ -1,3 +1,6 @@
+#################
+# Configuration #
+#################
 variable "namespace" {
   default     = ""
   description = "Namespace name"
