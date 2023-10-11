@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 image:
   repository: prom/pushgateway
-  tag: v1.3.0
+  tag: v1.6.2
   pullPolicy: IfNotPresent
 
 service:
@@ -17,7 +17,7 @@ serviceAccount:
   # The name of the ServiceAccount to use.
   # If not set and create is true, a name is generated using the fullname template
   name:
-  
+
 replicaCount: 1
 
 # Enable this if you're using https://github.com/coreos/prometheus-operator
