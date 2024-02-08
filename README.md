@@ -14,7 +14,15 @@ https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-
 
 ## Usage
 
-See [this example](example/pushgateway.tf)
+```hcl
+module "pushgateway" {
+  source    = "github.com/ministryofjustice/cloud-platform-terraform-pushgateway?ref=version" # use the latest release
+  namespace = "example-namespace"
+}
+
+```
+
+See the [examples/](examples/) folder for more information.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
