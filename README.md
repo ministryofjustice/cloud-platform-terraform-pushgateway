@@ -17,7 +17,7 @@ https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-
 ```hcl
 module "pushgateway" {
   source    = "github.com/ministryofjustice/cloud-platform-terraform-pushgateway?ref=version" # use the latest release
-  namespace = "example-namespace"
+  namespace = var.namespace
 }
 
 ```
